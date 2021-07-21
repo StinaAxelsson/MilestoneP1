@@ -41,6 +41,8 @@
     left: 50%;
     bottom: 0px;
   }
+
+ /* Allt nedanför är tillagt i test koden */ 
 #start{
     margin-left: 650px;
     margin-top: 150px;
@@ -52,4 +54,7 @@
     z-index: 1;
     text-align: center;
     font-size: 30px;
+}
+.hide{
+    display: none;
 }
