@@ -1,12 +1,157 @@
-#canvas{
-    position: relative;
-    width: 25em;
-    height: 30em;
-    margin: 40px auto;
-    border: 2px solid white;
-    background-color: rgb(214, 140, 140);
-    overflow: hidden;
+@import url('https://fonts.googleapis.com/css2?family=Roboto&family=Tourney:wght@700&display=swap');
+
+/*Styling for the background and title of the game
+that is the same all the time*/
+
+body {
+    height: 100vh;
+    width: 100%;
+    margin: 0;
+    background-image: url("bg.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    text-align: center;
 }
+
+#heading {
+    position: relative;
+    text-align: center;
+    font-family: Tourney, sans-serif;
+    font-size: 30px;
+    color: #ff4da6;
+    padding: 2%;
+}
+
+/*Styling for the start menu*/
+
+#menu-container{
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    background-color: rgba(255, 230, 242, 0.4);
+    width: 50%;
+    height: 60vh;
+    margin: 0 auto;
+    border-radius: 10px;
+}
+.how-to-btn, .start-game-btn, .about-btn, .back {
+    text-align: center;
+    padding: 2%;
+}
+.menu-btn {
+    font-size: 28px;
+    font-family: Tourney, sans-serif;
+    padding: 2%;
+    background-color: #00cc99;
+    border: 1px solid black;
+    border-radius: 10px;
+    width: 23%;    
+    margin: 1em auto;
+    
+}
+.menu-btn:hover{
+    background-color: #ff4da6;
+    padding: 3%;
+    font-size: 32px;
+}
+.menu-btn a{
+    text-decoration: none;
+    color: black;
+    
+}
+
+/*Styling for the "How to play" section*/
+
+#how-to-play{
+    text-align: center;
+    flex-direction: column;
+    height: 100%;
+}
+#how-to-play h3{
+    font-family: Tourney, sans-serif;
+    font-size: 28px;
+    margin-top: 3rem;
+    
+}
+#how-to-play p{
+    font-family: Roboto, sans-serif;
+    font-size: 20px;
+    padding: 1%;
+    margin: 1rem;
+}
+.back-btn{
+    font-size: 20px;
+    font-family: Tourney, sans-serif;
+    padding: 1%;
+    background-color: #00cc99;
+    border: 1px solid black;
+    border-radius: 10px; 
+    margin: 0 auto;
+    margin-bottom: 1rem;
+}
+.back-btn:hover{
+    background-color: #ff4da6;
+    padding: 1%;
+    font-size: 26px;
+}
+
+/* Styling for "start game" section */
+
+#start-game{  
+    text-align: center;  
+    height: 100%;
+}
+
+#start-game h3{
+    font-family: Tourney, sans-serif;
+    font-size: 28px;
+    margin-top: 3rem;  
+}
+
+.ship-container{
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    margin: 4rem;
+    justify-content: space-around;
+}
+
+.black-ship, .purple-ship, .green-ship{
+    font-size: 4rem;
+    transform: rotate(270deg);
+}
+.black-ship{
+    color: black;
+}
+.purple-ship{
+    color: blueviolet;
+}
+.green-ship{
+    color: green;
+}
+
+#start-game p{
+    font-family: Roboto, sans-serif;
+    font-size: 18px;
+    padding: 1%;
+    margin: 1rem;
+}
+
+#black-ship:hover, #purple-ship:hover, #green-ship:hover{
+    border: 3px solid black;
+    border-radius: 10px;
+    padding-top: 1%;  
+}
+#black-ship a, #purple-ship a, #green-ship a{
+    text-decoration: none;
+    color: black;
+}
+
+/* Styling for the game board page*/
+
+
+/*
 .score-level-container{
     display: flex;
     flex-direction: row;
@@ -29,32 +174,5 @@
     font-family: Roboto, sans-serif;
     padding: 1%;
     margin-right: 10px;
-}
+}*/
 
-#spaceship1{
-    position: absolute;
-    width: 40px;
-    height: 40px;
-    background: url("spaceship.png");
-    background-size: contain;
-    background-repeat: no-repeat;
-    left: 50%;
-    bottom: 0px;
-  }
-
- /* Allt nedanför är tillagt i test koden */ 
-#start{
-    margin-left: 650px;
-    margin-top: 150px;
-    width: 200px;
-    color: black;
-    background-color: green;
-    height: 100px;
-    position: absolute;
-    z-index: 1;
-    text-align: center;
-    font-size: 30px;
-}
-.hide{
-    display: none;
-}
