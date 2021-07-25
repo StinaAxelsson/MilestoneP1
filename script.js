@@ -27,4 +27,24 @@ var makeEnemies = setInterval(() =>{
 }, 1500);
 
 
+var moveEnemies = setInterval(() =>{
 
+    var newEnemies = document.getElementsByClassName("newEnemies");
+
+    if(newEnemies != undefined) {
+        for(var i=0 ; i < newEnemies.length; i++ ) {
+
+            var enemie = newEnemies[i];
+            var enemieTop = parseInt(window.getComputedStyle(enemie).getPropertyValue("top")
+            );
+            //enemie.style.top = enemieTop + 20 + 'px';
+            if (enemieTop >= 400) {
+                alert("Game Over");
+                clearInterval(moveEnemies);
+                window.location.reload();
+            }
+
+            enemie.style.top = enemieTop + 20 + 'px';
+        }
+    }
+}, 250);
