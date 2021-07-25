@@ -1,29 +1,18 @@
-const canvas = document.getElementById("gameArea");
-const ctx = canvas.getContext("2d");
+var player = document.getElementById('player');
 
-let player = getElementById("spaceship")
 
-//Game Loop
-function drawGame(){
-    requestAnimationFrame(drawGame);
-    clearScreen();
-    player();
-    
-}
-function player(){
-    
-}
+/* key event, make the player go left and right when press left and righ arrow */
+window.addEventListener('keydown', (e) =>{
+    var left =parseInt(window.getComputedStyle(player).getPropertyValue("left"));
+    if (e.key == "ArrowLeft" && left > 0){
+        player.style.left = left - 10 + "px";
+    } 
+    else if (e.key == "ArrowRight" && left <=250){
+        player.style.left = left + 10 + "px";
+    }
+})
 
-function clearScreen(){
-    ctx.fillStyle = "pink";
-    ctx.fillRect(0, 0, canvas.clientWidth, canvas.height);
+function startGame(){
+
 }
 
-document.body.addEventListener("keydown", keyDown);
-document.body.addEventListener("keyup", keyUp);
-
-function keyDown(event) {}
-
-function keyUp(event){}
-
-drawGame();
