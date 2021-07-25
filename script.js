@@ -1,4 +1,5 @@
 var player = document.getElementById('player');
+var gameArea = document.getElementById('gameArea')
 
 
 /* key event, make the player go left and right when press left and righ arrow */
@@ -12,7 +13,18 @@ window.addEventListener('keydown', (e) =>{
     }
 })
 
-function startGame(){
+/*Makes new enemies and place it in random places*/ 
+var makeEnemies = setInterval(() =>{
 
-}
+    var enemie = document.createElement('div');
+    enemie.classList.add('newEnemies');
+
+    var enemieLeft = parseInt(window.getComputedStyle(enemie).getPropertyValue('left'));
+    enemie.style.left = Math.floor(Math.random() * 250) + "px";
+
+    gameArea.appendChild(enemie);
+
+}, 1500);
+
+
 
