@@ -11,7 +11,53 @@ window.addEventListener('keydown', (e) =>{
     else if (e.key == "ArrowRight" && left <=250){
         player.style.left = left + 10 + "px";
     }
-})
+    if (e.key == "ArrowUp" || e.key == "Space") {
+        //32 is for space key
+        var bullet = document.createElement("div");
+        bullet.classList.add("bullets");
+        gameArea.appendChild(bullet);
+
+        var movebullet = setInterval(() => {
+            var newEnemies = document.getElementsByClassName("newEnemies");
+      
+            for (var i = 0; i < newEnemies.length; i++) {
+              var enemie = newEnemies[i];
+              if (enemie != undefined) {
+                var enemiebound = enemie.getBoundingClientRect();
+                var bulletbound = bullet.getBoundingClientRect();
+      
+                //Condition to check whether the rock/alien and the bullet are at the same position..!
+                //If so,then we have to destroy that rock
+      
+                if (
+                  bulletbound.left >= enemiebound.left &&
+                  bulletbound.right <= enemiebound.right &&
+                  bulletbound.top <= enemiebound.top &&
+                  bulletbound.bottom <= enemiebound.bottom
+                ) {
+                  enemie.parentElement.removeChild(enemie); //Just removing that particular rock;
+                  
+                  
+                    
+                }
+              }
+            }
+            var bulletbottom = parseInt(
+              window.getComputedStyle(bullet).getPropertyValue("bottom")
+            );
+      
+            //Stops the bullet from moving outside the gamebox
+            if (bulletbottom >= 400) {
+              clearInterval(movebullet);
+            }
+      
+            bullet.style.left = left + "px"; //bullet should always be placed at the top of my jet..!
+            bullet.style.bottom = bulletbottom + 3 + "px";
+          });
+        }
+      });
+
+
 
 /*Makes new enemies and place it in random places*/ 
 var makeEnemies = setInterval(() =>{
@@ -19,7 +65,8 @@ var makeEnemies = setInterval(() =>{
     var enemie = document.createElement('div');
     enemie.classList.add('newEnemies');
 
-    var enemieLeft = parseInt(window.getComputedStyle(enemie).getPropertyValue('left'));
+    var enemieleft = parseInt(
+        window.getComputedStyle(enemie).getPropertyValue('left'));
     enemie.style.left = Math.floor(Math.random() * 250) + "px";
 
     gameArea.appendChild(enemie);

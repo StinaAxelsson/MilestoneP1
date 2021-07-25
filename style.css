@@ -171,6 +171,7 @@ body {
     height: auto;
     margin: 0 auto;
     background-color: white;
+    z-index: 10;
 }
 #score-div p{
     font-size: 16px;
@@ -216,4 +217,13 @@ body {
     background-size: contain;
     background-repeat: no-repeat;
 }
-
+.bullets{
+    position: absolute;
+    bottom: 40px;
+    left: 51%;
+    width: 20px;
+    height: 20px;
+    background: url("rocket-icon.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+}
