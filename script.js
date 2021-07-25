@@ -26,7 +26,7 @@ var makeEnemies = setInterval(() =>{
 
 }, 1500);
 
-
+// Make the enemies falling down and set the game over alert if it touch the bottom
 var moveEnemies = setInterval(() =>{
 
     var newEnemies = document.getElementsByClassName("newEnemies");
@@ -37,8 +37,8 @@ var moveEnemies = setInterval(() =>{
             var enemie = newEnemies[i];
             var enemieTop = parseInt(window.getComputedStyle(enemie).getPropertyValue("top")
             );
-            //enemie.style.top = enemieTop + 20 + 'px';
-            if (enemieTop >= 400) {
+            
+            if (enemieTop >= 350) {
                 alert("Game Over");
                 clearInterval(moveEnemies);
                 window.location.reload();
