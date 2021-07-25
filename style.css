@@ -147,6 +147,22 @@ body {
     text-decoration: none;
     color: black;
 }
+/*start screen button*/
+
+#start {
+    position: absolute;
+    background-color: #ee5253;
+    left: 44%;
+    top: 50%;
+    color: white;
+    z-index: 1;
+    text-align: center;
+    border:1px solid #ff6b66;
+    margin: 0 auto;
+    font-size: 20px;
+    width:150px;
+
+}
 
 /* Styling for the game board page*/
 
@@ -198,6 +214,7 @@ body {
     top: 350px;
 }
 .enemies{
+    display: none;
     position: absolute;
     top: 0px;
     width: 50px;

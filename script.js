@@ -1,5 +1,7 @@
-var player = document.getElementById('player');
-var gameArea = document.getElementById('gameArea')
+const player = document.getElementById('player');
+const gameArea = document.getElementById('gameArea');
+const startScreen =document.getElementById('start');
+
 
 
 /* key event, make the player go left and right when press left and righ arrow */
@@ -60,7 +62,8 @@ window.addEventListener('keydown', (e) =>{
 
 
 /*Makes new enemies and place it in random places*/ 
-var makeEnemies = setInterval(() =>{
+
+ var makeEnemies = setInterval(() =>{
 
     var enemie = document.createElement('div');
     enemie.classList.add('newEnemies');
@@ -73,10 +76,13 @@ var makeEnemies = setInterval(() =>{
 
 }, 1500);
 
-// Make the enemies falling down and set the game over alert if it touch the bottom
-var moveEnemies = setInterval(() =>{
 
-    var newEnemies = document.getElementsByClassName("newEnemies");
+// Make the enemies falling down and set the game over alert if it touch the bottom
+
+
+var moveEnemies = setInterval(() =>{
+var newEnemies = document.getElementsByClassName("newEnemies");
+
 
     if(newEnemies != undefined) {
         for(var i=0 ; i < newEnemies.length; i++ ) {
@@ -94,4 +100,25 @@ var moveEnemies = setInterval(() =>{
             enemie.style.top = enemieTop + 20 + 'px';
         }
     }
+    
 }, 250);
+
+
+
+/* start game */ 
+startScreen.addEventListener("click",start);
+function gamePlay(){
+    if(player.start){
+        newEnemies();
+
+        window.requestAnimationFrame(start);
+    }
+}
+
+function start(){
+    startScreen.classList.add('hide');
+    gameArea.innerHTML="";
+
+    player.start =true;
+    window.requestAnimationFrame(gamePlay);
+}
