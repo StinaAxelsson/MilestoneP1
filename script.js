@@ -20,13 +20,13 @@ window.addEventListener('keydown', (e) =>{
         gameArea.appendChild(bullet);
 
         var movebullet = setInterval(() => {
-            var newEnemies = document.getElementsByClassName("newEnemies");
+            let newEnemies = document.getElementsByClassName("newEnemies");
       
-            for (var i = 0; i < newEnemies.length; i++) {
-              var enemie = newEnemies[i];
+            for (let i = 0; i < newEnemies.length; i++) {
+              let enemie = newEnemies[i];
               if (enemie != undefined) {
-                var enemiebound = enemie.getBoundingClientRect();
-                var bulletbound = bullet.getBoundingClientRect();
+                let enemiebound = enemie.getBoundingClientRect();
+                let bulletbound = bullet.getBoundingClientRect();
       
                 //Condition to check whether the rock/alien and the bullet are at the same position..!
                 //If so,then we have to destroy that rock
@@ -62,33 +62,33 @@ window.addEventListener('keydown', (e) =>{
 
 
 /*Makes new enemies and place it in random places*/ 
+function makeEnemies(){
+ let makeEnemies = setInterval(() =>{
 
- var makeEnemies = setInterval(() =>{
-
-    var enemie = document.createElement('div');
+    let enemie = document.createElement('div');
     enemie.classList.add('newEnemies');
 
-    var enemieleft = parseInt(
+    let enemieleft = parseInt(
         window.getComputedStyle(enemie).getPropertyValue('left'));
     enemie.style.left = Math.floor(Math.random() * 250) + "px";
 
     gameArea.appendChild(enemie);
 
 }, 1500);
-
+}
 
 // Make the enemies falling down and set the game over alert if it touch the bottom
 
-
-var moveEnemies = setInterval(() =>{
-var newEnemies = document.getElementsByClassName("newEnemies");
+function moveEnemies(){
+let moveEnemies = setInterval(() =>{
+let newEnemies = document.getElementsByClassName("newEnemies");
 
 
     if(newEnemies != undefined) {
-        for(var i=0 ; i < newEnemies.length; i++ ) {
+        for(let i=0 ; i < newEnemies.length; i++ ) {
 
-            var enemie = newEnemies[i];
-            var enemieTop = parseInt(window.getComputedStyle(enemie).getPropertyValue("top")
+            let enemie = newEnemies[i];
+            let enemieTop = parseInt(window.getComputedStyle(enemie).getPropertyValue("top")
             );
             
             if (enemieTop >= 350) {
@@ -102,6 +102,7 @@ var newEnemies = document.getElementsByClassName("newEnemies");
     }
     
 }, 250);
+}
 
 
 
