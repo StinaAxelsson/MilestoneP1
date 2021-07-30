@@ -11,46 +11,44 @@ let sfxShoot=document.getElementById("sfxShoot");
 let sfxExplosion=document.getElementById("sfxExplosion");
 
 let Key = {
-  ArrowUp: 38,
-  ArrowDown: 40,
+  ArrowLeft: 37,
+  ArrowRight: 39,
   SpaceBar: 32,
-  W: 87,
-  S: 83,
-  D: 68,
+
 }
 
 function playerMovement(event) {
-  if(event.keyCode === Key.ArrowUp || event.keyCode === Key.W) {
+  if(event.keyCode === Key.ArrowLeft) {
     event.preventDefault();
-    moveUp();
-  } else if(event.keyCode === Key.ArrowDown || event.keyCode === Key.S) {
+    moveLeft();
+  } else if(event.keyCode === Key.ArrowRight ) {
       event.preventDefault();
-      moveDown();
-  } else if(event.keyCode === Key.SpaceBar || event.keyCode === Key.D) {
+      moveRight();
+  } else if(event.keyCode === Key.SpaceBar) {
       event.preventDefault();
       fireLaser();
   }
 }
 
-function moveUp() {
-  let topPosition = getComputedStyle(yourShip).getPropertyValue('top');
-  if(topPosition === "0px") {
+function moveLeft() {
+  let leftPosition = getComputedStyle(yourShip).getPropertyValue('left');
+  if(leftPosition === "0px") {
     return
   } else {
-      let position = parseInt(topPosition);
+      let position = parseInt(leftPosition);
       position -= 50;
-      yourShip.style.top = `${position}px`;
+      yourShip.style.left = `${position}px`;
   }
 }
 
-function moveDown() {
-  let topPosition = getComputedStyle(yourShip).getPropertyValue('top');
-  if(topPosition === "550px") {
+function moveRight() {
+  let leftPosition = getComputedStyle(yourShip).getPropertyValue('left');
+  if(leftPosition === "550px") {
     return
   } else {
-      let position = parseInt(topPosition);
+      let position = parseInt(leftPosition);
       position += 50;
-      yourShip.style.top = `${position}px`;
+      yourShip.style.left = `${position}px`;
   }
 }
 
@@ -63,18 +61,18 @@ function fireLaser() {
 
 function createLaserElement() {
   let xPosition = parseInt(window.getComputedStyle(yourShip).getPropertyValue('left'));
-  let yPosition = parseInt(window.getComputedStyle(yourShip).getPropertyValue('top'));
+  let yPosition = parseInt(window.getComputedStyle(yourShip).getPropertyValue('bottom'));
   let newLaser = document.createElement('img');
   newLaser.src = './rocket-icon.png';
   newLaser.classList.add('laser');
   newLaser.style.left = `${xPosition}px`;
-  newLaser.style.top = `${yPosition - 10}px`;
+  newLaser.style.bottom = `${yPosition +10 }px`;
   return newLaser;
 }
 
 function moveLaser(laser) {
   let laserInterval = setInterval(() => {
-    let xPosition = parseInt(laser.style.left);
+    let xPosition = parseInt(laser.style.bottom);
     let aliens = document.querySelectorAll('.alien');
 
     aliens.forEach((alien) => {
@@ -88,10 +86,10 @@ function moveLaser(laser) {
       }
     })
     
-    if (xPosition === 340) {
+    if (xPosition === 0) {
       laser.remove();
     } else {
-        laser.style.left = `${xPosition + 8}px`;
+        laser.style.bottom = `${xPosition + 8}px`;
     }
   }, 10);
 }
@@ -110,7 +108,7 @@ function createAliens() {
 
 function moveAlien(alien){
   let moveAlienInterval = setInterval(() => {
-    let xPosition = parseInt(window.getComputedStyle(alien).getPropertyValue('left'));
+    let xPosition = parseInt(window.getComputedStyle(alien).getPropertyValue('bottom'));
 
     if (xPosition <= 50) {
       if(Array.from(alien.classList).includes('dead-alien')) {
@@ -119,7 +117,7 @@ function moveAlien(alien){
           gameOver();
       } 
     } else {
-        alien.style.left = `${xPosition - 4}px`;
+        alien.style.bottom = `${xPosition - 4}px`;
     }
   }, 30);
 }

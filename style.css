@@ -29,8 +29,8 @@
   #main-play-area {
     background: var(--preto);
     background-image: url(spacebg.png);
-    height: 600px;
-    width: 600px;
+    height: 500px;
+    width: 400px;
   }
   
   .score {
@@ -66,8 +66,8 @@
     position: relative;
     height: 60px;
     width: 70px;
-    left: 20px;
-    top: 250px;
+    left: 130px;
+    top: 340px;
   }
   
   .laser {
