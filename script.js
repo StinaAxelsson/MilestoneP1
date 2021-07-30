@@ -1,125 +1,182 @@
-const player = document.getElementById('player');
-const gameArea = document.getElementById('gameArea');
-const startScreen =document.getElementById('start');
+const yourShip = document.querySelector('.player-shooter');
+const playArea = document.querySelector('#main-play-area');
+const aliensImg = ['asteroid.png'];
+const instructionsText = document.querySelector('.game-instructions');
+const startButton = document.querySelector('.start-button');
 
+let alienInterval; 
+let score = 0;
 
+let sfxShoot=document.getElementById("sfxShoot");
+let sfxExplosion=document.getElementById("sfxExplosion");
 
-/* key event, make the player go left and right when press left and righ arrow */
-window.addEventListener('keydown', (e) =>{
-    var left =parseInt(window.getComputedStyle(player).getPropertyValue("left"));
-    if (e.key == "ArrowLeft" && left > 0){
-        player.style.left = left - 10 + "px";
-    } 
-    else if (e.key == "ArrowRight" && left <=250){
-        player.style.left = left + 10 + "px";
-    }
-    if (e.key == "ArrowUp" || e.key == "Space") {
-        //32 is for space key
-        var bullet = document.createElement("div");
-        bullet.classList.add("bullets");
-        gameArea.appendChild(bullet);
-
-        var movebullet = setInterval(() => {
-            let newEnemies = document.getElementsByClassName("newEnemies");
-      
-            for (let i = 0; i < newEnemies.length; i++) {
-              let enemie = newEnemies[i];
-              if (enemie != undefined) {
-                let enemiebound = enemie.getBoundingClientRect();
-                let bulletbound = bullet.getBoundingClientRect();
-      
-                //Condition to check whether the rock/alien and the bullet are at the same position..!
-                //If so,then we have to destroy that rock
-      
-                if (
-                  bulletbound.left >= enemiebound.left &&
-                  bulletbound.right <= enemiebound.right &&
-                  bulletbound.top <= enemiebound.top &&
-                  bulletbound.bottom <= enemiebound.bottom
-                ) {
-                  enemie.parentElement.removeChild(enemie); //Just removing that particular rock;
-                  
-                  
-                    
-                }
-              }
-            }
-            var bulletbottom = parseInt(
-              window.getComputedStyle(bullet).getPropertyValue("bottom")
-            );
-      
-            //Stops the bullet from moving outside the gamebox
-            if (bulletbottom >= 400) {
-              clearInterval(movebullet);
-            }
-      
-            bullet.style.left = left + "px"; //bullet should always be placed at the top of my jet..!
-            bullet.style.bottom = bulletbottom + 3 + "px";
-          });
-        }
-      });
-
-
-
-/*Makes new enemies and place it in random places*/ 
-function makeEnemies(){
- let makeEnemies = setInterval(() =>{
-
-    let enemie = document.createElement('div');
-    enemie.classList.add('newEnemies');
-
-    let enemieleft = parseInt(
-        window.getComputedStyle(enemie).getPropertyValue('left'));
-    enemie.style.left = Math.floor(Math.random() * 250) + "px";
-
-    gameArea.appendChild(enemie);
-
-}, 1500);
+let Key = {
+  ArrowUp: 38,
+  ArrowDown: 40,
+  SpaceBar: 32,
+  W: 87,
+  S: 83,
+  D: 68,
 }
 
-// Make the enemies falling down and set the game over alert if it touch the bottom
+function playerMovement(event) {
+  if(event.keyCode === Key.ArrowUp || event.keyCode === Key.W) {
+    event.preventDefault();
+    moveUp();
+  } else if(event.keyCode === Key.ArrowDown || event.keyCode === Key.S) {
+      event.preventDefault();
+      moveDown();
+  } else if(event.keyCode === Key.SpaceBar || event.keyCode === Key.D) {
+      event.preventDefault();
+      fireLaser();
+  }
+}
 
-function moveEnemies(){
-let moveEnemies = setInterval(() =>{
-let newEnemies = document.getElementsByClassName("newEnemies");
+function moveUp() {
+  let topPosition = getComputedStyle(yourShip).getPropertyValue('top');
+  if(topPosition === "0px") {
+    return
+  } else {
+      let position = parseInt(topPosition);
+      position -= 50;
+      yourShip.style.top = `${position}px`;
+  }
+}
 
+function moveDown() {
+  let topPosition = getComputedStyle(yourShip).getPropertyValue('top');
+  if(topPosition === "550px") {
+    return
+  } else {
+      let position = parseInt(topPosition);
+      position += 50;
+      yourShip.style.top = `${position}px`;
+  }
+}
 
-    if(newEnemies != undefined) {
-        for(let i=0 ; i < newEnemies.length; i++ ) {
+function fireLaser() {
+  
+  let laser = createLaserElement();
+  playArea.appendChild(laser);
+  moveLaser(laser);
+}
 
-            let enemie = newEnemies[i];
-            let enemieTop = parseInt(window.getComputedStyle(enemie).getPropertyValue("top")
-            );
-            
-            if (enemieTop >= 350) {
-                alert("Game Over");
-                clearInterval(moveEnemies);
-                window.location.reload();
-            }
+function createLaserElement() {
+  let xPosition = parseInt(window.getComputedStyle(yourShip).getPropertyValue('left'));
+  let yPosition = parseInt(window.getComputedStyle(yourShip).getPropertyValue('top'));
+  let newLaser = document.createElement('img');
+  newLaser.src = './rocket-icon.png';
+  newLaser.classList.add('laser');
+  newLaser.style.left = `${xPosition}px`;
+  newLaser.style.top = `${yPosition - 10}px`;
+  return newLaser;
+}
 
-            enemie.style.top = enemieTop + 20 + 'px';
-        }
-    }
+function moveLaser(laser) {
+  let laserInterval = setInterval(() => {
+    let xPosition = parseInt(laser.style.left);
+    let aliens = document.querySelectorAll('.alien');
+
+    aliens.forEach((alien) => {
+      if(checkLaserCollision(laser, alien)) {
+        
+        score++;
+        scoreboardRefresh();
+        alien.src = './rocket-icon.png';
+        alien.classList.remove('alien');
+        alien.classList.add('dead-alien');
+      }
+    })
     
-}, 250);
-}
-
-
-
-/* start game */ 
-startScreen.addEventListener("click",start);
-function gamePlay(){
-    if(player.start){
-        newEnemies();
-
-        window.requestAnimationFrame(start);
+    if (xPosition === 340) {
+      laser.remove();
+    } else {
+        laser.style.left = `${xPosition + 8}px`;
     }
+  }, 10);
 }
 
-function start(){
-    startScreen.classList.add('hide');
-    gameArea.innerHTML="";
-
-    player.start =true;
-    window.requestAnimationFrame(gamePlay);
+function createAliens() {
+  let newAlien = document.createElement('img');
+  let alienSprite = aliensImg[Math.floor(Math.random() * aliensImg.length)];
+  newAlien.src = alienSprite;
+  newAlien.classList.add('alien');
+  newAlien.classList.add('alien-transition');
+  newAlien.style.left = '370px';
+  newAlien.style.top = `${Math.floor(Math.random() * 330) + 30}px`;
+  playArea.appendChild(newAlien);
+  moveAlien(newAlien);
 }
+
+function moveAlien(alien){
+  let moveAlienInterval = setInterval(() => {
+    let xPosition = parseInt(window.getComputedStyle(alien).getPropertyValue('left'));
+
+    if (xPosition <= 50) {
+      if(Array.from(alien.classList).includes('dead-alien')) {
+        alien.remove();
+      } else {
+          gameOver();
+      } 
+    } else {
+        alien.style.left = `${xPosition - 4}px`;
+    }
+  }, 30);
+}
+
+function checkLaserCollision(laser, alien) {
+  let laserTop = parseInt(laser.style.top);
+  let laserLeft = parseInt(laser.style.left);
+  let laserCenter = laserTop + 15;
+  let laserBottom = laserTop - 20;
+  
+  let alienTop = parseInt(alien.style.top);
+  let alienLeft = parseInt(alien.style.left);
+  let alienBottom = alienTop - 30;
+  
+  if (laserLeft != 340 && laserLeft + 40 >= alienLeft) {
+    if (laserTop <= alienTop && laserTop >= alienBottom || laserCenter <= alienTop && laserCenter >= alienBottom || laserBottom <= alienTop && laserTop >= alienBottom) {
+      return true
+    } else {
+        return false;
+    }
+  } else {
+      return false;
+  }
+}
+
+startButton.addEventListener('click', (event) => {
+  playGame();
+})
+
+function playGame() {
+  scoreboardRefresh();
+  startButton.style.display = 'none';
+  instructionsText.style.display = 'none';
+  window.addEventListener('keydown', playerMovement);
+  alienInterval = setInterval(() => {
+    createAliens();
+  }, 2000);
+}
+
+let scoreboardRefresh = () => {
+  document.getElementById("score").innerHTML = "Score: " + score;
+}
+
+function gameOver() {
+  score = 0;
+  window.removeEventListener('keydown', playerMovement);
+  clearInterval(alienInterval);
+  let aliens = document.querySelectorAll('.alien');
+  aliens.forEach((alien) => alien.remove());
+  let lasers = document.querySelectorAll('.laser');
+  lasers.forEach((laser) => laser.remove());
+  setTimeout(() => {
+    document.getElementById("restart-button").innerHTML = "RESTART";
+    document.getElementById("game-over").innerHTML = "You Fail , Try Again Hero!";
+    yourShip.style.top = "250px";
+    startButton.style.display = "block";
+    instructionsText.style.display = "block";
+  });
+}
+

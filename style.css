@@ -1,246 +1,95 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto&family=Tourney:wght@700&display=swap');
-
-/*Styling for the background and title of the game
-that is the same all the time*/
-
-body {
+:root {
+    --verde: #42e96b;
+    --branco: #ffffff;
+    --preto: #000000;
+  }
+  
+  * {
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+  }
+  
+  body {
+      font-family: Principal;
     height: 100vh;
     width: 100%;
-    margin: 0;
-    background-image: url("bg.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    text-align: center;
-}
-
-#heading {
-    position: relative;
-    text-align: center;
-    font-family: Tourney, sans-serif;
-    font-size: 30px;
-    color: #ff4da6;
-    padding: 2%;
-}
-
-/*Styling for the start menu*/
-
-#menu-container{
     display: flex;
-    flex-direction: column;
-    align-content: center;
     justify-content: center;
-    background-color: rgba(255, 230, 242, 0.4);
-    width: 50%;
-    height: 60vh;
-    margin: 0 auto;
-    border-radius: 10px;
-}
-.how-to-btn, .start-game-btn, .about-btn, .back {
-    text-align: center;
-    padding: 2%;
-}
-.menu-btn {
-    font-size: 28px;
-    font-family: Tourney, sans-serif;
-    padding: 2%;
-    background-color: #00cc99;
-    border: 1px solid black;
-    border-radius: 10px;
-    width: 23%;    
-    margin: 1em auto;
-    
-}
-.menu-btn:hover{
-    background-color: #ff4da6;
-    padding: 3%;
-    font-size: 32px;
-}
-.menu-btn a{
-    text-decoration: none;
-    color: black;
-    
-}
-
-/*Styling for the "How to play" section*/
-
-#how-to-play{
-    text-align: center;
-    flex-direction: column;
-    height: 100%;
-}
-#how-to-play h3{
-    font-family: Tourney, sans-serif;
-    font-size: 28px;
-    margin-top: 3rem;
-    
-}
-#how-to-play p{
-    font-family: Roboto, sans-serif;
-    font-size: 20px;
-    padding: 1%;
-    margin: 1rem;
-}
-.back-btn{
-    font-size: 20px;
-    font-family: Tourney, sans-serif;
-    padding: 1%;
-    background-color: #00cc99;
-    border: 1px solid black;
-    border-radius: 10px; 
-    margin: 0 auto;
-    margin-bottom: 1rem;
-}
-.back-btn:hover{
-    background-color: #ff4da6;
-    padding: 1%;
-    font-size: 26px;
-}
-
-/* Styling for "start game" section */
-
-#start-game{  
-    text-align: center;  
-    height: 100%;
-}
-
-#start-game h3{
-    font-family: Tourney, sans-serif;
-    font-size: 28px;
-    margin-top: 3rem;  
-}
-
-.ship-container{
-    display: flex;
-    flex-direction: row;
-    text-align: center;
-    margin: 4rem;
-    justify-content: space-around;
-}
-
-.black-ship, .purple-ship, .green-ship{
-    font-size: 4rem;
-    transform: rotate(270deg);
-}
-.black-ship{
-    color: black;
-}
-.purple-ship{
-    color: blueviolet;
-}
-.green-ship{
-    color: green;
-}
-
-#start-game p{
-    font-family: Roboto, sans-serif;
-    font-size: 18px;
-    padding: 1%;
-    margin: 1rem;
-}
-
-#black-ship:hover, #purple-ship:hover, #green-ship:hover{
-    border: 3px solid black;
-    border-radius: 10px;
-    padding-top: 1%;  
-}
-#black-ship a, #purple-ship a, #green-ship a{
-    text-decoration: none;
-    color: black;
-}
-/*start screen button*/
-
-#start {
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    background-color: var(--verde);
+  }
+  
+  h4 {
+    color: var(--branco);
+  }
+  
+  #main-play-area {
+    background: var(--preto);
+    background-image: url(spacebg.png);
+    height: 600px;
+    width: 600px;
+  }
+  
+  .score {
     position: absolute;
-    background-color: #ee5253;
-    left: 44%;
-    top: 50%;
     color: white;
-    z-index: 1;
-    text-align: center;
-    border:1px solid #ff6b66;
-    margin: 0 auto;
-    font-size: 20px;
-    width:150px;
-
-}
-
-/* Styling for the game board page*/
-
-.gameArea{
-    display: flex;
-    margin: 0 auto;
-    width: 300px;
-    height: 400px;
-    background-color: rgb(202, 5, 186);   
+    margin-left: 500px;
+    margin-top: 10px;
+  }
+  
+  .game-instructions {
     position: relative;
-    border-radius: 5px;
-    border: 2px solid black;
-}
-
-
-.score-level-container{
-    display: flex;
-    flex-direction: row;
+    color: var(--branco);
     text-align: center;
-    justify-content: space-between;
-    width: 20em;
-    height: auto;
-    margin: 0 auto;
-    background-color: white;
-    z-index: 10;
-}
-#score-div p{
-    font-size: 16px;
-    font-family: Roboto, sans-serif;
-    padding: 1%;
-    margin-left: 10px;
-}
-
-#level-div p{
-    font-size: 16px;
-    font-family: Roboto, sans-serif;
-    padding: 1%;
-    margin-right: 10px;
-}
-
-#player{
-    width: 50px;
-    height: 50px;
-    background-image: url("millennium-falcon.png");
-    background-size: contain;
-    background-repeat: no-repeat;
-    position: absolute;
-    left: 130px;
-    top: 350px;
-}
-.enemies{
-    display: none;
-    position: absolute;
-    top: 0px;
-    width: 50px;
-    height: 50px;
-    background: url("asteroid.png");
-    background-size: contain;
-    background-repeat: no-repeat;
-
-}
-
-.newEnemies{
-    position: absolute;
-    top: 0px;
-    width: 50px;
-    height: 50px;
-    background: url("asteroid.png");
-    background-size: contain;
-    background-repeat: no-repeat;
-}
-.bullets{
-    position: absolute;
-    bottom: 40px;
-    left: 51%;
-    width: 20px;
-    height: 20px;
-    background: url("rocket-icon.png");
-    background-size: contain;
-    background-repeat: no-repeat;
-}
+    top: 50px;
+  }
+  
+  .start-button {
+    position: relative;
+    color: var(--branco);
+    text-align: center;
+    top: 10rem;
+    cursor: pointer;
+  }
+  
+  #restart-button {
+    position: relative;
+    color: var(--branco);
+    text-align: center;
+    top: 10rem;
+  }
+  
+  .player-shooter {
+    position: relative;
+    height: 60px;
+    width: 70px;
+    left: 20px;
+    top: 250px;
+  }
+  
+  .laser {
+    position: relative;
+    width: 40px;
+    height: 30px;
+  }
+  
+  .alien {
+    position: relative;
+    height: 60px;
+    width: 70px;
+  }
+  
+  .alien-transition {
+    opacity: 1;
+    transition: opacity 1.5s ease-in-out;
+  }
+  
+  .dead-alien {
+    position: relative;
+    height: 60px;
+    width: 70px;
+    opacity: 0;
+  }
