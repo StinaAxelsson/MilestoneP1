@@ -1,25 +1,19 @@
-  
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<title>Space Shooter</title>
-		<meta charset="UTF-8">
-		<meta http-equiv="content-language" content="pt-br">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="author" content="Jodecir Neto">
-		<link rel="stylesheet" href="style.css">
-		<script src="script.js" defer></script> 
-	</head>
-	<body>
-		<div id="main-play-area">
-			<div class="group">				
-				<h4 class="score" id="score">Score: 0</h4>
-			</div>
-			<img class="player-shooter" src="millennium-falcon.png" alt="hero">
-			<h4 class="game-instructions" id="game-over">
-				Don't let enemies invade your planet!
-			</h4>
-			<h1 class="start-button" id="restart-button">START</h1>
-		</div>
-	</body>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="style.css">
+	<title>Document</title>
+</head>
+<body onload="startGame()">
+	
+<div class="controller">
+	<button onmousedown="moveleft()" onmouseup="stopMove()" ontouchstart="moveleft()">LEFT</button>
+	<button onmousedown="moveright()" onmouseup="stopMove()" ontouchstart="moveright()">RIGHT</button>
+</div>
+
+	<script src="script.js"></script>
+</body>
 </html>
