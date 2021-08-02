@@ -5,6 +5,7 @@
     flex-wrap: wrap;
     background-color: aquamarine;
     border: 1px solid black;
+    margin: 0 auto;
 }
 
 .gameArea div{
@@ -24,7 +25,9 @@
     background-size: cover;
 }
 .shoot{
-    background-color: black;
+    background-image: url(/rocket-icon.png);
+    background-size: cover;
+
 }
 
 .boom{

@@ -37,6 +37,7 @@ function remove() {
         comets[cometFall[i]].classList.remove('comets');
     }
 }
+remove();
 
 
 
