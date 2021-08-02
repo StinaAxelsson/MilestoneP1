@@ -1,6 +1,9 @@
 const gameArea = document.querySelector('.gameArea');
 let currentPlayerIndex = 68;
 let width = 8;
+let direction = 1;
+let goingRight = true;
+
 
 
 for (let i= 0; i < 72; i++){
@@ -23,6 +26,13 @@ function drawComets() {
 }
 drawComets();
 
+function remove() {
+    for (let i = 0; i < cometFall.length; i++){
+        comets[cometFall[i]].classList.remove('comets');
+    }
+}
+remove();
+
 
 comets[currentPlayerIndex].classList.add('player');
 
@@ -39,3 +49,26 @@ function movePlayer(e){
     comets[currentPlayerIndex].classList.add('player');
 }
 document.addEventListener('keydown', movePlayer);
+
+function moveComets(){
+    const leftWall = cometFall[1] % width === 0;
+    const rightWall = cometFall[cometFall.length -1] % width === width -1;
+    remove();
+
+    if(rightWall && goingRight){
+        for(let i = 0; i < cometFall.length; i++){
+            cometFall[i] += width -1;
+            direction = -1;
+            goingRight = false;
+        }
+    }
+
+    /* fortsätt här med leftWall 19.51 på videon*/ 
+
+    for(let i = 0; i < cometFall.length; i++){
+        cometFall[i] += direction;
+    }
+    drawComets();
+}
+
+cometId = setInterval(moveComets, 500);
