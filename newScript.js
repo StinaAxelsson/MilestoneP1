@@ -1,4 +1,5 @@
 const gameArea = document.querySelector('.gameArea');
+const result = document.querySelector('.result');
 let currentPlayerIndex = 68;
 let width = 8;
 let direction = 1;
@@ -57,18 +58,48 @@ function moveComets(){
 
     if(rightWall && goingRight){
         for(let i = 0; i < cometFall.length; i++){
-            cometFall[i] += width -1;
+            cometFall[i] += width +1;
             direction = -1;
             goingRight = false;
         }
     }
 
-    /* fortsätt här med leftWall 19.51 på videon*/ 
+    if(leftWall && !goingRight){
+        for( let i=0; i < cometFall.length; i++){
+            cometFall[i] += width -1;
+            direction = 1;
+            goingRight = true;
+        }
+    } 
 
     for(let i = 0; i < cometFall.length; i++){
         cometFall[i] += direction;
     }
     drawComets();
-}
 
+    if ( comets[currentPlayerIndex].classList.contains('comets', 'player')){
+        result.innerHTML = 'GAME OVER';
+        clearInterval(cometId);
+    }
+    for (let i = 0; i < cometFall.length; i++) {
+        if(cometFall[i] > (comets.length)){
+            result.innerHTML = "GAME OVER";
+            clearInterval(cometId);
+        }
+    }
+
+}
 cometId = setInterval(moveComets, 500);
+
+function shoot(e) {
+    let fireId;
+    let currentFireIndex = currentPlayerIndex;
+
+    function moveFire(){
+        comets[currentFireIndex].classList.remove('shoot');
+        currentFireIndex -= width;
+        comets[currentFireIndex].classList.add('shoot');
+
+        
+    }
+}
