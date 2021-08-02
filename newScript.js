@@ -3,7 +3,10 @@ const result = document.querySelector('.result');
 let currentPlayerIndex = 68;
 let width = 8;
 let direction = 1;
+let cometId;
 let goingRight = true;
+let cometRemove = [];
+let results = 0;
 
 
 
@@ -22,7 +25,9 @@ const cometFall = [
 
 function drawComets() {
     for (let i = 0; i < cometFall.length; i++){
+        if(!cometRemove.includes(i)){
         comets[cometFall[i]].classList.add('comets');
+    }
     }
 }
 drawComets();
@@ -32,7 +37,7 @@ function remove() {
         comets[cometFall[i]].classList.remove('comets');
     }
 }
-remove();
+
 
 
 comets[currentPlayerIndex].classList.add('player');
@@ -52,7 +57,7 @@ function movePlayer(e){
 document.addEventListener('keydown', movePlayer);
 
 function moveComets(){
-    const leftWall = cometFall[1] % width === 0;
+    const leftWall = cometFall[0] % width === 0;
     const rightWall = cometFall[cometFall.length -1] % width === width -1;
     remove();
 
@@ -65,7 +70,7 @@ function moveComets(){
     }
 
     if(leftWall && !goingRight){
-        for( let i=0; i < cometFall.length; i++){
+        for( let i = 0; i < cometFall.length; i++){
             cometFall[i] += width -1;
             direction = 1;
             goingRight = true;
@@ -87,6 +92,10 @@ function moveComets(){
             clearInterval(cometId);
         }
     }
+    if ( cometRemove.length === cometFall.length){
+        result.innerHTML = "YOU WIN";
+        clearInterval(cometId);
+    }
 
 }
 cometId = setInterval(moveComets, 500);
@@ -100,6 +109,24 @@ function shoot(e) {
         currentFireIndex -= width;
         comets[currentFireIndex].classList.add('shoot');
 
-        
+        if (comets[currentFireIndex].classList.contains('comets')){
+            comets[currentFireIndex].classList.remove('shoot');
+            comets[currentFireIndex].classList.remove('comets');
+            comets[currentFireIndex].classList.add('boom');
+
+            setTimeout(() => comets[currentFireIndex].classList.remove('boom'), 300);
+            clearInterval(fireId);
+
+            const cometsRemove = cometFall.indexOf(currentFireIndex);
+            cometRemove.push(cometsRemove);
+            results++;
+            result.innerHTML = results;
+        }
+    }
+    switch(e.key) {
+        case 'ArrowUp':
+            fireId = setInterval(moveFire, 100);
+            
     }
 }
+document.addEventListener('keydown', shoot);
