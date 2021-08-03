@@ -1,121 +1,93 @@
-const player = document.getElementById('player');
-const gameArea = document.getElementById('gameArea');
-const enemie = document.getElementsByClassName('enemies');
-const startGameBtn = document.getElementById('start');
+var jet = document.getElementById("jet");
+var board = document.getElementById("board");
 
-let score = 0;
-let enemieInterval;
-let shots = document.getElementById('shots');
-let key ={
-    ArrowRight: 39,
-    ArrowLeft: 37,
-    SpaceBar: 32,
-}
+window.addEventListener("keydown", (e) => {
+  var left = parseInt(window.getComputedStyle(jet).getPropertyValue("left"));
+  if (e.key == "ArrowLeft" && left > 0) {
+    jet.style.left = left - 10 + "px";
+  }
+  //460  =>  board width - jet width
+  else if (e.key == "ArrowRight" && left <= 460) {
+    jet.style.left = left + 10 + "px";
+  }
 
+  if (e.key == "ArrowUp" || e.keyCode == 32) {
+    //32 is for space key
+    var bullet = document.createElement("div");
+    bullet.classList.add("bullets");
+    board.appendChild(bullet);
 
+    var movebullet = setInterval(() => {
+      var rocks = document.getElementsByClassName("rocks");
 
-function movePlayer(event){
-    if(event.keyCode === Key.ArrowRight){
-        event.preventDefault();
-        moveRight();
+      for (var i = 0; i < rocks.length; i++) {
+        var rock = rocks[i];
+        if (rock != undefined) {
+          var rockbound = rock.getBoundingClientRect();
+          var bulletbound = bullet.getBoundingClientRect();
 
-    } else if (event.keyCode === Key.ArrowLeft) {
-        event.preventDefault();
-        moveLeft();
+          //Condition to check whether the rock/alien and the bullet are at the same position..!
+          //If so,then we have to destroy that rock
 
-    } else if(event.keyCode === Key.SpaceBar){
-        event.preventDefault();
-        shots();
-    }
-}
-
-function moveRight(){
-    let RightPosition = getComputedStyle(player).getPropertyValue('right');
-    if(RightPosition === "0px") {
-      return
-    } else {
-        let position = parseInt(RightPosition);
-        position -= 50;
-        playerp.style.right = `${position}px`;
-    }        
-}
-
-function moveLeft(){
-    let RightPosition = getComputedStyle(player).getPropertyValue('right');
-    if(RightPosition === "550px") {
-      return
-    } else {
-        let position = parseInt(RightPosition);
-        position += 50;
-        player.style.right = `${position}px`;
-    }
-}
-
-function shots(){
-    shots.play();
-    let fire = createFireElement();
-    playArea.appendChild(fire);
-    moveShots(fire);
-}
-
-function generateShots(){
-    let xPosition = parseInt(window.getComputedStyle(player).getPropertyValue('top'));
-    let yPosition = parseInt(window.getComputedStyle(player).getPropertyValue('bottom'));
-    let newEnemies = document.createElement('newEnemies');
-   
-    newEnemies.classList.add('newEnemies');
-    newEnemies.style.top = `${xPosition}px`;
-    newEnemies.style.bottom = `${yPosition - 10}px`;
-    return newEnemies;
-}
-
-function moveShots(shots){
-    let shotsInterval = setInterval(() => {
-        let xPosition = parseInt(shots.style.top);
-        let enemies = document.getElementById('enemies');
-    
-        enemies.forEach((enemies) => {
-          if(checkShotCollision(shots, enemies)) {
-            score++;
-            scoreboardRefresh();
-            enemies.classList.remove('newEnemies');
+          if (
+            bulletbound.left >= rockbound.left &&
+            bulletbound.right <= rockbound.right &&
+            bulletbound.top <= rockbound.top &&
+            bulletbound.bottom <= rockbound.bottom
+          ) {
+            rock.parentElement.removeChild(rock); //Just removing that particular rock;
+            //Scoreboard
+            document.getElementById("points").innerHTML =
+              parseInt(document.getElementById("points").innerHTML) + 1;
           }
-        })
-        
-        if (xPosition === 340) {
-          enemies.remove();
-        } else {
-            shots.style.top = `${xPosition + 8}px`;
         }
-      }, 10);
-}
+      }
+      var bulletbottom = parseInt(
+        window.getComputedStyle(bullet).getPropertyValue("bottom")
+      );
 
-function makeEnemies(){
-    let newEnemies = document.createElement('div');
-    let alienSprite = aliensImg[Math.floor(Math.random() * aliensImg.length)];
-    newAlien.src = alienSprite;
-    newAlien.classList.add('alien');
-    newAlien.classList.add('alien-transition');
-    newAlien.style.left = '370px';
-    newAlien.style.top = `${Math.floor(Math.random() * 330) + 30}px`;
-    playArea.appendChild(newAlien);
-    moveAlien(newAlien);
-}     
+      //Stops the bullet from moving outside the gamebox
+      if (bulletbottom >= 500) {
+        clearInterval(movebullet);
+      }
 
+      bullet.style.left = left + "px"; //bullet should always be placed at the top of my jet..!
+      bullet.style.bottom = bulletbottom + 3 + "px";
+    });
+  }
+});
 
+var generaterocks = setInterval(() => {
+  var rock = document.createElement("div");
+  rock.classList.add("rocks");
+  //Just getting the left of the rock to place it in random position...
+  var rockleft = parseInt(
+    window.getComputedStyle(rock).getPropertyValue("left")
+  );
+  //generate value between 0 to 450 where 450 => board width - rock width
+  rock.style.left = Math.floor(Math.random() * 450) + "px";
 
-function moveEnemies(){
+  board.appendChild(rock);
+}, 1000);
 
-}
+var moverocks = setInterval(() => {
+  var rocks = document.getElementsByClassName("rocks");
 
-function checkShotsCollision(){
+  if (rocks != undefined) {
+    for (var i = 0; i < rocks.length; i++) {
+      //Now I have to increase the top of each rock,so that the rocks can move downwards..
+      var rock = rocks[i]; //getting each rock
+      var rocktop = parseInt(
+        window.getComputedStyle(rock).getPropertyValue("top")
+      );
+      //475 => boardheight - rockheight + 25
+      if (rocktop >= 475) {
+        alert("Game Over");
+        clearInterval(moverocks);
+        window.location.reload();
+      }
 
-}
-
-function startGame(){
-
-}
-
-function gameOver(){
-
-}
+      rock.style.top = rocktop + 25 + "px";
+    }
+  }
+}, 450);
