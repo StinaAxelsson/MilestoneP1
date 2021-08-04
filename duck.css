@@ -1,6 +1,6 @@
-.gameboard{
-    width: 400px;
-    height: 500px;
+#gameboard{
+    width: 25em;
+    height: 30em;
     display: flex;
     border: 1px solid black;
     position: relative;
@@ -12,8 +12,17 @@
     width: 50px;
     height: 50px;
     position: absolute;
-    background-image: url(/millennium-falcon.png);
     pointer-events: none;
+    top: 400px;
+    left:50%;
     
-    
+}
+
+#enemy{
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    pointer-events: none;
+    top: 0px;
+    left:50%;
 }
