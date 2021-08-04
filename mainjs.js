@@ -1,30 +1,19 @@
-var jet = document.getElementById("jet");
-var board = document.getElementById("board");
+const jet = document.getElementById("jet");
+const board = document.getElementById("board");
 
-window.addEventListener("keydown", (e) => {
-  var left = parseInt(window.getComputedStyle(jet).getPropertyValue("left"));
-  if (e.key == "ArrowLeft" && left > 0) {
-    jet.style.left = left - 10 + "px";
-  }
-  //460  =>  board width - jet width
-  else if (e.key == "ArrowRight" && left <= 460) {
-    jet.style.left = left + 10 + "px";
-  }
 
-  if (e.key == "ArrowUp" || e.keyCode == 32) {
-    //32 is for space key
-    var bullet = document.createElement("div");
-    bullet.classList.add("bullets");
-    board.appendChild(bullet);
+window.addEventListener(MouseEvent)
 
-    var movebullet = setInterval(() => {
-      var rocks = document.getElementsByClassName("rocks");
 
-      for (var i = 0; i < rocks.length; i++) {
-        var rock = rocks[i];
+
+    const movebullet = setInterval(() => {
+      let rocks = document.getElementsByClassName("rocks");
+
+      for (let i = 0; i < rocks.length; i++) {
+        let rock = rocks[i];
         if (rock != undefined) {
-          var rockbound = rock.getBoundingClientRect();
-          var bulletbound = bullet.getBoundingClientRect();
+          let rockbound = rock.getBoundingClientRect();
+          let bulletbound = bullet.getBoundingClientRect();
 
           //Condition to check whether the rock/alien and the bullet are at the same position..!
           //If so,then we have to destroy that rock
@@ -42,7 +31,7 @@ window.addEventListener("keydown", (e) => {
           }
         }
       }
-      var bulletbottom = parseInt(
+      const bulletbottom = parseInt(
         window.getComputedStyle(bullet).getPropertyValue("bottom")
       );
 
@@ -57,11 +46,11 @@ window.addEventListener("keydown", (e) => {
   }
 });
 
-var generaterocks = setInterval(() => {
-  var rock = document.createElement("div");
+const generaterocks = setInterval(() => {
+  let rock = document.createElement("div");
   rock.classList.add("rocks");
   //Just getting the left of the rock to place it in random position...
-  var rockleft = parseInt(
+  let rockleft = parseInt(
     window.getComputedStyle(rock).getPropertyValue("left")
   );
   //generate value between 0 to 450 where 450 => board width - rock width
@@ -70,14 +59,14 @@ var generaterocks = setInterval(() => {
   board.appendChild(rock);
 }, 1000);
 
-var moverocks = setInterval(() => {
-  var rocks = document.getElementsByClassName("rocks");
+const moverocks = setInterval(() => {
+  let rocks = document.getElementsByClassName("rocks");
 
   if (rocks != undefined) {
-    for (var i = 0; i < rocks.length; i++) {
+    for (let i = 0; i < rocks.length; i++) {
       //Now I have to increase the top of each rock,so that the rocks can move downwards..
-      var rock = rocks[i]; //getting each rock
-      var rocktop = parseInt(
+      let rock = rocks[i]; //getting each rock
+      let rocktop = parseInt(
         window.getComputedStyle(rock).getPropertyValue("top")
       );
       //475 => boardheight - rockheight + 25
