@@ -1,10 +1,21 @@
 const jet = document.getElementById("jet");
 const board = document.getElementById("board");
 
+window.addEventListener("keydown", (e) => {
+  const left = parseInt(window.getComputedStyle(jet).getPropertyValue("left"));
+  if (e.key == "ArrowLeft" && left > 0) {
+    jet.style.left = left - 10 + "px";
+  }
+  //460  =>  board width - jet width
+  else if (e.key == "ArrowRight" && left <= 460) {
+    jet.style.left = left + 10 + "px";
+  }
 
-window.addEventListener(MouseEvent)
-
-
+  if (e.key == "ArrowUp" || e.keyCode == 32) {
+    //32 is for space key
+    const bullet = document.createElement("div");
+    bullet.classList.add("bullets");
+    board.appendChild(bullet);
 
     const movebullet = setInterval(() => {
       let rocks = document.getElementsByClassName("rocks");
