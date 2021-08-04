@@ -4,13 +4,16 @@
     display: flex;
     border: 1px solid black;
     position: relative;
+    cursor: none;
+    margin: 0 auto;
 }
 
-.player{
+#player{
     width: 50px;
     height: 50px;
     position: absolute;
     background-image: url(/millennium-falcon.png);
-    bottom: 0px;
-    left: 40%;
+    pointer-events: none;
+    
+    
 }
